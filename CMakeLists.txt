@@ -1,17 +1,21 @@
 cmake_minimum_required( VERSION 3.8 )
 
 project( EOSIO )
-include(CTest) # suppresses DartConfiguration.tcl error
-enable_testing()
+#include(CTest) # suppresses DartConfiguration.tcl error
+#enable_testing()
 
-if ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
-   message(WARNING "CMAKE_INSTALL_PREFIX is set to /usr/local. This is not recommended.")
-endif()
+#if ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+#   message(WARNING "CMAKE_INSTALL_PREFIX is set to /usr/local. This is not recommended.")
+#endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
 
 if (UNIX AND APPLE)
    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/gettext")
+endif()
+
+if (UNIX AND NOT APPLE)
+   set(LLVM_DIR "/usr/lib/llvm-8/cmake")
 endif()
 
 include( GNUInstallDirs )
@@ -57,6 +61,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 set(BUILD_DOXYGEN FALSE CACHE BOOL "Build doxygen documentation on every make")
 set(BUILD_MONGO_DB_PLUGIN FALSE CACHE BOOL "Build mongo database plugin")
 set(ENABLE_MULTIVERSION_PROTOCOL_TEST FALSE CACHE BOOL "Enable nodeos multiversion protocol test")
+set(DISABLE_WASM_SPEC_TESTS TRUE CACHE BOOL "Disable eosio wasm spec tests")
 
 # add defaults for openssl
 if(APPLE AND UNIX AND "${OPENSSL_ROOT_DIR}" STREQUAL "")
@@ -102,7 +107,7 @@ endif()
 set( Boost_USE_STATIC_LIBS ON CACHE STRING "ON or OFF" )
 # Most boost deps get implictly picked up via fc, as just about everything links to fc. In addition we pick up
 # the pthread dependency through fc.
-find_package(Boost 1.67 REQUIRED COMPONENTS program_options unit_test_framework)
+#find_package(Boost 1.67 REQUIRED COMPONENTS program_options unit_test_framework)
 
 if( APPLE AND UNIX )
 # Apple Specific Options Here
@@ -156,13 +161,14 @@ endif()
 
 message( STATUS "Using '${EOSIO_ROOT_KEY}' as public key for 'eosio' account" )
 
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/libraries/boost/boost )
 add_subdirectory( libraries )
 add_subdirectory( plugins )
 add_subdirectory( programs )
-add_subdirectory( scripts )
+#add_subdirectory( scripts )
 add_subdirectory( unittests )
-add_subdirectory( tests )
-add_subdirectory( tools )
+#add_subdirectory( tests )
+#add_subdirectory( tools )
 
 if (NOT DISABLE_WASM_SPEC_TESTS)
 add_subdirectory( eosio-wasm-spec-tests/generated-tests )
@@ -223,5 +229,5 @@ add_custom_target(base-install
 get_property(_CTEST_CUSTOM_TESTS_IGNORE GLOBAL PROPERTY CTEST_CUSTOM_TESTS_IGNORE)
 file(WRITE "${CMAKE_BINARY_DIR}/CTestCustom.cmake" "SET(CTEST_CUSTOM_TESTS_IGNORE ${_CTEST_CUSTOM_TESTS_IGNORE})")
 
-include(package)
-include(doxygen)
+#include(package)
+#include(doxygen)
