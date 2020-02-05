@@ -163,15 +163,15 @@ IF (UNIX OR CYGWIN)
       COMPONENT pkgconfig)
 ENDIF()
 
-install(FILES readme.md
+ignore_install(FILES readme.md
         DESTINATION "${DOC_INSTALL_DIR}"
         COMPONENT doc)
 
-install(DIRECTORY include/rapidjson
+ignore_install(DIRECTORY include/rapidjson
     DESTINATION "${INCLUDE_INSTALL_DIR}"
     COMPONENT dev)
 
-install(DIRECTORY example/
+ignore_install(DIRECTORY example/
     DESTINATION "${DOC_INSTALL_DIR}/examples"
     COMPONENT examples
     # Following patterns are for excluding the intermediate/object files

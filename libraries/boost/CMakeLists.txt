@@ -96,9 +96,9 @@ foreach(boost_lib ${Boost_COMPONENTS})
         add_library(boost_${boost_lib} STATIC ${SOURCES})
         set_target_properties(boost_${boost_lib} PROPERTIES POSITION_INDEPENDENT_CODE ON)
         # install component
-        install(TARGETS boost_${boost_lib} DESTINATION lib)
+        ignore_install(TARGETS boost_${boost_lib} DESTINATION lib)
         # install corresponding headers
-        install(DIRECTORY ${Boost_ROOT_DIR}/boost/${boost_lib} DESTINATION include/boost FILES_MATCHING PATTERN "*.hpp" PATTERN "*.ipp" PATTERN "*.h")
+        ignore_install(DIRECTORY ${Boost_ROOT_DIR}/boost/${boost_lib} DESTINATION include/boost FILES_MATCHING PATTERN "*.hpp" PATTERN "*.ipp" PATTERN "*.h")
         # alias library name to match that from find_package
         if (${boost_lib} STREQUAL "test")
             add_library(Boost::unit_test_framework ALIAS boost_${boost_lib})
@@ -114,7 +114,7 @@ foreach(boost_lib ${boost_all_libs})
     list(APPEND all_header_excludes ${all_headers_excludes} PATTERN ${boost_lib} EXCLUDE) 
 endforeach(boost_lib ${boost_all_libs})
 
-install(
+ignore_install(
     DIRECTORY ${Boost_ROOT_DIR}/boost
     DESTINATION include 
     FILES_MATCHING PATTERN "*.hpp" PATTERN "*.ipp" PATTERN "*.h"

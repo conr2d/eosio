@@ -71,7 +71,7 @@ set_target_properties(yubihsm-wrap PROPERTIES INSTALL_RPATH "${YUBIHSM_INSTALL_L
 
 add_coverage(yubihsm-wrap)
 
-install(
+ignore_install(
   TARGETS yubihsm-wrap
   ARCHIVE DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}"
   LIBRARY DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}"
@@ -84,5 +84,5 @@ if (NOT WITHOUT_MANPAGES)
   add_custom_target (yubihsm-wrap-man ALL
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/yubihsm-wrap.1
     )
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yubihsm-wrap.1" DESTINATION "${YUBIHSM_INSTALL_MAN_DIR}/man1")
+  ignore_install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yubihsm-wrap.1" DESTINATION "${YUBIHSM_INSTALL_MAN_DIR}/man1")
 endif ()

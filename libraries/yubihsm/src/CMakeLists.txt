@@ -95,7 +95,7 @@ if (ENABLE_EXPERIMENTAL_YKYH)
   endif()
 endif()
 
-install(
+ignore_install(
   TARGETS yubihsm-shell
   ARCHIVE DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}"
   LIBRARY DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}"
@@ -109,7 +109,7 @@ if (NOT WITHOUT_MANPAGES)
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/yubihsm-shell.1
     )
 
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yubihsm-shell.1" DESTINATION "${YUBIHSM_INSTALL_MAN_DIR}/man1")
+  ignore_install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yubihsm-shell.1" DESTINATION "${YUBIHSM_INSTALL_MAN_DIR}/man1")
 endif()
 
 add_subdirectory (tests)

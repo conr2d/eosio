@@ -2,7 +2,7 @@
 macro(install_directory_permissions)
   cmake_parse_arguments(ARG "" "DIRECTORY" "" ${ARGN})
   set(dir ${ARG_DIRECTORY})
-  install(DIRECTORY DESTINATION ${dir}
+  ignore_install(DIRECTORY DESTINATION ${dir}
           DIRECTORY_PERMISSIONS OWNER_READ
                                 OWNER_WRITE
                                 OWNER_EXECUTE

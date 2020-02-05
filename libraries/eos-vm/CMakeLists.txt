@@ -126,7 +126,7 @@ endif()
 if(ENABLE_INSTALL)
    include(GNUInstallDirs)
    message(STATUS "Installing...")
-   install(TARGETS eos-vm
+   ignore_install(TARGETS eos-vm
             LIBRARY
                DESTINATION ${CMAKE_INSTALL_LIBDIR}
                COMPONENT Libraries
@@ -134,7 +134,7 @@ if(ENABLE_INSTALL)
                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
                COMPONENT Headers)
 
-   install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/eosio
+   ignore_install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/eosio
       DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 endif()
 

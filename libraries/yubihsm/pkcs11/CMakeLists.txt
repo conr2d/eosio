@@ -76,12 +76,12 @@ target_link_libraries(
   ${LIBCRYPTO_LDFLAGS}
   )
 
-install(
+ignore_install(
   TARGETS yubihsm_pkcs11
   ARCHIVE DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}/pkcs11"
   LIBRARY DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}/pkcs11"
   RUNTIME DESTINATION "${YUBIHSM_INSTALL_BIN_DIR}/pkcs11")
-install(FILES pkcs11.h DESTINATION "${YUBIHSM_INSTALL_INC_DIR}/pkcs11")
-install(FILES pkcs11y.h DESTINATION "${YUBIHSM_INSTALL_INC_DIR}/pkcs11")
+ignore_install(FILES pkcs11.h DESTINATION "${YUBIHSM_INSTALL_INC_DIR}/pkcs11")
+ignore_install(FILES pkcs11y.h DESTINATION "${YUBIHSM_INSTALL_INC_DIR}/pkcs11")
 
 add_subdirectory (tests)

@@ -31,7 +31,7 @@ target_include_directories(eosio-launcher PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(eosio-launcher
                       PRIVATE eosio_chain fc Boost::program_options ${CMAKE_DL_LIBS} ${PLATFORM_SPECIFIC_LIBS} )
 
-install( TARGETS
+ignore_install( TARGETS
    eosio-launcher
 
    RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}

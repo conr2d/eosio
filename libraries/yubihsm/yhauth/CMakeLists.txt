@@ -60,7 +60,7 @@ target_link_libraries (
 # Set install RPATH
 set_target_properties(yhauth PROPERTIES INSTALL_RPATH "${YUBIHSM_INSTALL_LIB_DIR}")
 
-install(
+ignore_install(
   TARGETS yhauth
   ARCHIVE DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}"
   LIBRARY DESTINATION "${YUBIHSM_INSTALL_LIB_DIR}"
@@ -74,5 +74,5 @@ if (NOT WITHOUT_MANPAGES)
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/yhauth.1
     )
 
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yhauth.1" DESTINATION "${YUBIHSM_INSTALL_MAN_DIR}/man1")
+  ignore_install(FILES "${CMAKE_CURRENT_BINARY_DIR}/yhauth.1" DESTINATION "${YUBIHSM_INSTALL_MAN_DIR}/man1")
 endif ()

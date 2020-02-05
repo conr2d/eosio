@@ -68,7 +68,7 @@ endif()
 
 set(CPACK_PACKAGING_INSTALL_PREFIX /)
 
-install( TARGETS
+ignore_install( TARGETS
    appbase
 
    RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
