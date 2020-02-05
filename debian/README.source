@@ -1,0 +1,12 @@
+eosio for Debian
+---------------
+
+Upstream source repository manages its libraries as git submodules, but this
+source package contains some of them, especially which are essential in build.
+
+Build configuration for cmake is widely modified to create debian package on
+specific version of distribution, and may not be suitable for building
+in various architectures.
+
+ -- Jeeyong Um <conr2d@gmail.com>  Wed, 05 Feb 2020 13:38:51 +0000
+

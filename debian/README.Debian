@@ -1,0 +1,8 @@
+eosio for Debian
+---------------
+
+Unlike DEB packages provided by original author (block.one), this package
+installs binaries to /usr/bin directly. (Original package installs binary
+to /usr/opt/eosio/$VERSION/bin and creates symbolic links in /usr/bin)
+
+ -- Jeeyong Um <conr2d@gmail.com>  Wed, 05 Feb 2020 13:38:51 +0000
