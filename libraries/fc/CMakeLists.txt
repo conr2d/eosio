@@ -122,7 +122,12 @@ list(APPEND sources ${fc_headers})
 
 setup_library( fc SOURCES ${sources} LIBRARY_TYPE STATIC DONT_INSTALL_LIBRARY )
 
-#find_package(Boost 1.66 REQUIRED COMPONENTS date_time filesystem chrono unit_test_framework iostreams)
+#find_package(Boost 1.66 REQUIRED COMPONENTS
+#    date_time
+#    filesystem
+#    chrono
+#    unit_test_framework
+#    iostreams)
   
 IF(APPLE)
   # As of 10.10 yosemite, the OpenSSL static libraries shipped with os x have a dependency
@@ -186,8 +191,8 @@ IF(NOT DEFINED SKIP_FC_TESTS)
   add_subdirectory( test )
 ENDIF()
 
-ignore_install(TARGETS fc
+install(TARGETS fc
    LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
    ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
-ignore_install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/fc DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/fc DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR})
 
