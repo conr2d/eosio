@@ -23,7 +23,8 @@ target_include_directories(
 
 # Create a custom target to update the version metadata upon every build.
 find_package(Git)
-if(EXISTS ${CMAKE_SOURCE_DIR}/.git AND ${GIT_FOUND})
+#if(EXISTS ${CMAKE_SOURCE_DIR}/.git AND ${GIT_FOUND})
+if (TRUE)
    add_custom_target(
       evaluate_every_build ALL
       COMMAND ${CMAKE_COMMAND} -DGIT_EXEC=${GIT_EXECUTABLE}
