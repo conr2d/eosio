@@ -1,3 +1,15 @@
+eosio (2.0.2-1) bionic; urgency=low
+
+  * Merge changes from upstream v2.0.2
+
+ -- Jeeyong Um <conr2d@gmail.com>  Fri, 07 Feb 2020 03:16:43 +0000
+
+eosio (2.0.1-2) bionic; urgency=low
+
+  * Fix the version name of `unknown`
+
+ -- Jeeyong Um <conr2d@gmail.com>  Thu, 06 Feb 2020 18:19:02 +0000
+
 eosio (2.0.1-1) bionic; urgency=low
 
   * Initial release
