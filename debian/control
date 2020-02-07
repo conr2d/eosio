@@ -24,7 +24,7 @@ Homepage: https://eos.io
 #Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/eosio.git
 
 Package: eosio
-Architecture: any
+Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: An open source smart contract platform
  This package provides EOSIO node daemon nodeos, wallet daemon keosd,

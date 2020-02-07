@@ -19,6 +19,7 @@ endif()
 
 if (UNIX AND NOT APPLE)
    set(LLVM_DIR "/usr/lib/llvm-8/cmake")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --param ggc-min-expand=1 --param ggc-min-heapsize=8192 -Wl,--no-keep-memory")
 endif()
 
 include( GNUInstallDirs )
