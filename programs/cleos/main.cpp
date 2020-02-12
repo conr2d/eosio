@@ -2391,6 +2391,8 @@ CLI::callback_t header_opt_callback = [](CLI::results_t res) {
    return true;
 };
 
+#include "install.ipp"
+
 int main( int argc, char** argv ) {
    setlocale(LC_ALL, "");
    bindtextdomain(locale_domain, locale_path);
@@ -3993,6 +3995,7 @@ int main( int argc, char** argv ) {
    auto rexexec        = rexexec_subcommand(rex);
    auto closerex       = closerex_subcommand(rex);
 
+   auto install        = install_subcommand(&app);
 
    try {
        app.parse(argc, argv);
