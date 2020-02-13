@@ -1,5 +1,12 @@
 #include <curl/curl.h>
+
+#if defined(__clang__) || (__GNUC__ >= 8)
 #include <filesystem>
+namespace fs = std::filesystem;
+#else
+#include <fc/filesystem.hpp>
+namespace fs = fc;
+#endif
 
 size_t curl_writefunc(void *data, size_t size, size_t nmemb, void* userp) {
    ((std::string*)userp)->append((char*)data, size * nmemb);
@@ -64,10 +71,10 @@ struct install_subcommand {
                   if (url.substr(url.size() - package_type.size()) == package_type) {
                      auto pos = url.rfind("/");
                      auto filename = url.substr(pos + 1);
-                     auto tmp = std::filesystem::temp_directory_path();
-                     std::filesystem::create_directory(tmp / "eosio-packages");
+                     auto tmp = fs::temp_directory_path();
+                     fs::create_directories(tmp / "eosio-packages");
                      auto filepath = tmp / "eosio-packages" / filename;
-                     auto fout = fopen(filepath.c_str(), "wb");
+                     auto fout = fopen(filepath.string().c_str(), "wb");
 
                      std::cout << "Downloading... " << filename << std::endl << std::endl;
                      curl_easy_reset(curl);
