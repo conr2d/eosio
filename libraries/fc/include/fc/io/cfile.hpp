@@ -38,6 +38,10 @@ public:
 
    bool is_open() const { return _open; }
 
+   static constexpr const char* create_or_update_rw_mode = "ab+";
+   static constexpr const char* update_rw_mode = "rb+";
+   static constexpr const char* truncate_rw_mode = "wb+";
+
    /// @param mode is any mode supported by fopen
    ///        Tested with:
    ///         "ab+" - open for binary update - create if does not exist
@@ -89,6 +93,19 @@ public:
          int ec = ferror( _file.get() );
          throw std::ios_base::failure( "cfile: " + _file_path.generic_string() +
                                        " unable to flush file, ferror: " + std::to_string( ec ) );
+      }
+   }
+
+   void sync() {
+      const int fd = fileno(_file.get() );
+      if( -1 == fd ) {
+         throw std::ios_base::failure( "cfile: " + _file_path.generic_string() +
+                                       " unable to convert file pointer to file descriptor, error: " +
+                                       std::to_string( errno ) );
+      }
+      if( -1 == fsync( fd ) ) {
+         throw std::ios_base::failure( "cfile: " + _file_path.generic_string() +
+                                       " unable to sync file, error: " + std::to_string( errno ) );
       }
    }
 
