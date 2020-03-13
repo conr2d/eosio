@@ -37,7 +37,7 @@ struct install_subcommand {
          }
          // hack to manage eoscc
          else if (package_name.find("eoscc") != string::npos) {
-            package_owner = "turnpike2";
+            package_owner = "turnpike";
          }
          //
 
