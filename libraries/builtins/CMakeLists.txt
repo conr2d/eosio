@@ -24,7 +24,7 @@ add_library ( builtins STATIC ${builtins_sources} )
 target_include_directories( builtins PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
                                             "${CMAKE_CURRENT_SOURCE_DIR}../softfloat/source/include" )
 
-install ( TARGETS
+ignore_install ( TARGETS
    builtins 
 
    RUNTIME DESTINATION bin
