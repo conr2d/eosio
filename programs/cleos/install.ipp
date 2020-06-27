@@ -1,12 +1,5 @@
 #include <curl/curl.h>
-
-#if defined(__clang__) || (__GNUC__ >= 8)
-#include <filesystem>
-namespace fs = std::filesystem;
-#else
 #include <fc/filesystem.hpp>
-namespace fs = fc;
-#endif
 
 size_t curl_writefunc(void *data, size_t size, size_t nmemb, void* userp) {
    ((std::string*)userp)->append((char*)data, size * nmemb);
@@ -29,17 +22,12 @@ struct install_subcommand {
       install->add_option("name", package_name, localized("A package name to be installed"))->required();
       install->add_option("--type", package_type, localized("A type of package [deb/rpm], defaults to 'deb'"));
 
-      install->set_callback([this] {
+      install->callback([this] {
          auto pos = package_name.find('/');
          if (pos != string::npos) {
             package_owner = package_name.substr(0, pos);
             package_name = package_name.substr(pos + 1);
          }
-         // hack to manage eoscc
-         else if (package_name.find("eoscc") != string::npos) {
-            package_owner = "turnpike";
-         }
-         //
 
          pos = package_name.find('@');
          if (pos != string::npos) {
@@ -71,8 +59,8 @@ struct install_subcommand {
                   if (url.substr(url.size() - package_type.size()) == package_type) {
                      auto pos = url.rfind("/");
                      auto filename = url.substr(pos + 1);
-                     auto tmp = fs::temp_directory_path();
-                     fs::create_directories(tmp / "eosio-packages");
+                     auto tmp = fc::temp_directory_path();
+                     fc::create_directories(tmp / "eosio-packages");
                      auto filepath = tmp / "eosio-packages" / filename;
                      auto fout = fopen(filepath.string().c_str(), "wb");
 
