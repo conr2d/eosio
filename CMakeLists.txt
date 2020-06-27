@@ -17,12 +17,6 @@ if (UNIX AND APPLE)
    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/gettext")
 endif()
 
-# mitigate build failure on launchpad PPA due to resource limitation
-set(BUILD_ON_LAUNCHPAD FALSE CACHE BOOL "Reduce memory usage during build")
-if(BUILD_ON_LAUNCHPAD)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --param ggc-min-expand=1 --param ggc-min-heapsize=8192 -Wl,--no-keep-memory")
-endif()
-
 include( GNUInstallDirs )
 include( InstallDirectoryPermissions )
 include( MASSigning )

@@ -187,6 +187,7 @@ ELSE()
   SET (OPENSSL_CONF_TARGET ${CMAKE_CURRENT_BINARY_DIR})
 ENDIF()
 
+set(SKIP_FC_TESTS TRUE CACHE BOOL "Disable build fc tests")
 IF(NOT DEFINED SKIP_FC_TESTS)
   add_subdirectory( test )
 ENDIF()
