@@ -7,6 +7,7 @@
 #include <boost/scoped_array.hpp>
 #include <fc/reflect/variant.hpp>
 #include <fc/io/json.hpp>
+#include <fc/utf8.hpp>
 #include <algorithm>
 
 namespace fc
@@ -729,21 +730,34 @@ void to_variant( const UInt<64>& n, variant& v ) { v = uint64_t(n); }
 void from_variant( const variant& v, UInt<64>& n ) { n = v.as_uint64(); }
 
 constexpr size_t minimize_max_size = 1024;
-constexpr size_t minimize_sub_max_size = minimize_max_size / 4;
+
+// same behavior as std::string::substr only removes invalid utf8, and lower ascii
+void clean_append( string& app, const std::string_view& s, size_t pos = 0, size_t len = string::npos ) {
+   std::string_view sub = s.substr( pos, len );
+   app.reserve( app.size() + sub.size() );
+   const bool escape_control_chars = false;
+   app += escape_string( sub, nullptr, escape_control_chars );
+}
 
 string format_string( const string& frmt, const variant_object& args, bool minimize )
 {
    std::string result;
    const string& format = ( minimize && frmt.size() > minimize_max_size ) ?
          frmt.substr( 0, minimize_max_size ) + "..." : frmt;
-   result.reserve( minimize_sub_max_size );
+
+   const auto arg_num = (args.size() == 0) ? 1 : args.size();
+   const auto max_format_size = std::max(minimize_max_size, format.size());
+   // limit each arg size when minimize is set
+   const auto minimize_sub_max_size = minimize ? ( max_format_size - format.size() ) / arg_num :  minimize_max_size;
+   // reserve space for each argument replaced by ...
+   result.reserve( max_format_size + 3 * args.size());
    size_t prev = 0;
    size_t next = format.find( '$' );
    while( prev != string::npos && prev < format.size() ) {
       if( next != string::npos ) {
-         result += format.substr( prev, next - prev );
+         clean_append( result, format, prev, next - prev );
       } else {
-         result += format.substr( prev );
+         clean_append( result, format, prev );
       }
 
       // if we got to the end, return it.
@@ -769,34 +783,41 @@ string format_string( const string& frmt, const variant_object& args, bool minim
             bool replaced = true;
             if( val != args.end() ) {
                if( val->value().is_object() || val->value().is_array() ) {
-                  if( minimize ) {
+                  if( minimize && (result.size() >= minimize_max_size)) {
                      replaced = false;
                   } else {
-                     result += json::to_string( val->value(), fc::time_point::maximum() );
+                     const auto max_length = minimize ? minimize_sub_max_size : std::numeric_limits<uint64_t>::max();
+                     try {
+                        // clean_append not needed as to_string is valid utf8
+                        result += json::to_string( val->value(), fc::time_point::maximum(),
+                                                   json::output_formatting::stringify_large_ints_and_doubles, max_length );
+                     } catch (...) {
+                        replaced = false;
+                     }
                   }
                } else if( val->value().is_blob() ) {
                   if( minimize && val->value().get_blob().data.size() > minimize_sub_max_size ) {
                      replaced = false;
                   } else {
-                     result += val->value().as_string();
+                     clean_append( result, val->value().as_string() );
                   }
                } else if( val->value().is_string() ) {
                   if( minimize && val->value().get_string().size() > minimize_sub_max_size ) {
                      auto sz = std::min( minimize_sub_max_size, minimize_max_size - result.size() );
-                     result += val->value().get_string().substr( 0, sz );
+                     clean_append( result, val->value().get_string(), 0, sz );
                      result += "...";
                   } else {
-                     result += val->value().get_string();
+                     clean_append( result, val->value().get_string() );
                   }
                } else {
-                  result += val->value().as_string();
+                  clean_append( result, val->value().as_string() );
                }
             } else {
                replaced = false;
             }
             if( !replaced ) {
                result += "${";
-               result += key;
+               clean_append( result, key );
                result += "}";
             }
             prev = next + 1;
@@ -806,7 +827,7 @@ string format_string( const string& frmt, const variant_object& args, bool minim
             // we didn't find it.. continue to while...
          }
       } else {
-         result += format[prev];
+         clean_append( result, format, prev, 1 );
          ++prev;
          next = format.find( '$', prev );
       }
