@@ -1,3 +1,9 @@
+eosio (2.0.6-1) focal; urgency=low
+
+  * Merge changes from upstream v2.0.6
+
+ -- Jeeyong Um <conr2d@gmail.com>  Sat, 27 Jun 2020 05:49:19 +0000
+
 eosio (2.0.4-1) bionic; urgency=low
 
   * Merge changes from upstream v2.0.4

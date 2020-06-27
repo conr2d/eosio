@@ -17,8 +17,9 @@ if (UNIX AND APPLE)
    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/gettext")
 endif()
 
-if (UNIX AND NOT APPLE)
-   set(LLVM_DIR "/usr/lib/llvm-8/cmake")
+# mitigate build failure on launchpad PPA due to resource limitation
+set(BUILD_ON_LAUNCHPAD FALSE CACHE BOOL "Reduce memory usage during build")
+if(BUILD_ON_LAUNCHPAD)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --param ggc-min-expand=1 --param ggc-min-heapsize=8192 -Wl,--no-keep-memory")
 endif()
 
@@ -81,9 +82,15 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT WIN32)
       list(APPEND EOSIO_WASM_RUNTIMES eos-vm-oc)
       # EOS VM OC requires LLVM, but move the check up here to a central location so that the EosioTester.cmakes
       # can be created with the exact version found
-      find_package(LLVM REQUIRED CONFIG)
-      if(LLVM_VERSION_MAJOR VERSION_LESS 7 OR LLVM_VERSION_MAJOR VERSION_GREATER 10)
-	      message(FATAL_ERROR "EOSIO requires an LLVM version 7.0 to 10.0")
+      find_package(LLVM CONFIG)
+      if(NOT LLVM_FOUND OR LLVM_VERSION_MAJOR VERSION_LESS 7 OR LLVM_VERSION_MAJOR VERSION_GREATER 10)
+         # For supporting ubuntu 18.04 and 20.04, make a fallback to llvm-8
+         if(EXISTS "/usr/lib/llvm-8/cmake")
+            set(LLVM_DIR "/usr/lib/llvm-8/cmake")
+            find_package(LLVM REQUIRED CONFIG)
+         else()
+            message(FATAL_ERROR "EOSIO requires an LLVM version 7.0 to 10.0")
+         endif()
       endif()
    endif()
 endif()

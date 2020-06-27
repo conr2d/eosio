@@ -14,6 +14,7 @@ Build-Depends:
  libtool,
  libusb-1.0-0-dev,
  libzstd-dev,
+ llvm-dev,
  llvm-8-dev,
  pkg-config,
  python-dev,
