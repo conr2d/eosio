@@ -1,3 +1,9 @@
+eosio (2.0.6-2) focal; urgency=low
+
+  * Add support for multiple ubuntu releases
+
+ -- Jeeyong Um <conr2d@gmail.com>  Sun, 28 Jun 2020 06:40:25 +0000
+
 eosio (2.0.6-1) focal; urgency=low
 
   * Merge changes from upstream v2.0.6
