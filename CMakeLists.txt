@@ -78,7 +78,8 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT WIN32)
       # can be created with the exact version found
       find_package(LLVM CONFIG)
       if(NOT LLVM_FOUND OR LLVM_VERSION_MAJOR VERSION_LESS 7 OR LLVM_VERSION_MAJOR VERSION_GREATER 10)
-         # For supporting ubuntu 18.04 and 20.04, make a fallback to llvm-8
+         # For supporting ubuntu 18.04, make a fallback to llvm-8
+         # Replace llvm-dev with llvm-8-dev in debian/control
          if(EXISTS "/usr/lib/llvm-8/cmake")
             set(LLVM_DIR "/usr/lib/llvm-8/cmake")
             find_package(LLVM REQUIRED CONFIG)
