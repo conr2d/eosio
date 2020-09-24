@@ -9,6 +9,7 @@ if ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
+include(integration)
 
 if (UNIX AND APPLE)
    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt/gettext")
