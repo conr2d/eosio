@@ -1,3 +1,4 @@
+add_subdirectory( boost )
 add_subdirectory( fc )
 add_subdirectory( builtins )
 add_subdirectory( softfloat )
