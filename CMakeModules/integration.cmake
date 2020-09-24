@@ -12,3 +12,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
+
+macro(find_package)
+  string(TOUPPER ${ARGV0} PACKAGE_NAME)
+  if(NOT PACKAGE_NAME STREQUAL "BOOST")
+    _find_package(${ARGV})
+  endif()
+endmacro()
