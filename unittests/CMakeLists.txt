@@ -1,3 +1,7 @@
+# suppress unit_tests build
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contracts.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/contracts.hpp ESCAPE_QUOTES)
+return()
+
 find_package( Gperftools QUIET )
 
 ### Build contracts with cdt if available ###
