@@ -41,6 +41,7 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/.git AND ${GIT_FOUND})
       # Create a dependency for the given library target.
       add_dependencies(version evaluate_every_build)
 else()
+   include(VersionConstants)
    # Modify and substitute the `.cpp.in` file for a `.cpp` in the build directory.
    configure_file(
       ${CMAKE_CURRENT_SOURCE_DIR}/src/version_impl.cpp.in
