@@ -1,14 +1,15 @@
 cmake_minimum_required( VERSION 3.8 )
 
 project( EOSIO )
-include(CTest) # suppresses DartConfiguration.tcl error
-enable_testing()
+#include(CTest) # suppresses DartConfiguration.tcl error
+#enable_testing()
 
 if ("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
    message(WARNING "CMAKE_INSTALL_PREFIX is set to /usr/local. This is not recommended.")
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules")
+include(integration)
 
 include( GNUInstallDirs )
 include( InstallDirectoryPermissions )
@@ -176,13 +177,13 @@ endif()
 add_subdirectory( libraries )
 add_subdirectory( plugins )
 add_subdirectory( programs )
-add_subdirectory( scripts )
-add_subdirectory( unittests )
-add_subdirectory( contracts )
-add_subdirectory( tests )
-add_subdirectory( tools )
+#add_subdirectory( scripts )
+#add_subdirectory( unittests )
+#add_subdirectory( contracts )
+#add_subdirectory( tests )
+#add_subdirectory( tools )
 
-option(DISABLE_WASM_SPEC_TESTS "disable building of wasm spec unit tests" OFF)
+option(DISABLE_WASM_SPEC_TESTS "disable building of wasm spec unit tests" ON)
 
 if (NOT DISABLE_WASM_SPEC_TESTS)
 add_subdirectory( eosio-wasm-spec-tests/generated-tests )
@@ -262,5 +263,5 @@ add_custom_target(base-install
 get_property(_CTEST_CUSTOM_TESTS_IGNORE GLOBAL PROPERTY CTEST_CUSTOM_TESTS_IGNORE)
 file(WRITE "${CMAKE_BINARY_DIR}/CTestCustom.cmake" "SET(CTEST_CUSTOM_TESTS_IGNORE ${_CTEST_CUSTOM_TESTS_IGNORE})")
 
-include(package)
-include(doxygen)
+#include(package)
+#include(doxygen)
