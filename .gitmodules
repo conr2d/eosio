@@ -1,3 +1,0 @@
-[submodule "libraries/appbase"]
-	path = libraries/appbase
-	url = https://github.com/eosio/appbase
