@@ -1,6 +1,3 @@
-[submodule "libraries/softfloat"]
-	path = libraries/softfloat
-	url = https://github.com/eosio/berkeley-softfloat-3
 [submodule "libraries/yubihsm"]
 	path = libraries/yubihsm
 	url = https://github.com/Yubico/yubihsm-shell
