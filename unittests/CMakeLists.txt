@@ -1,3 +1,7 @@
+# suppress unit_tests build
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/snapshots.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/snapshots.hpp ESCAPE_QUOTES)
+return()
+
 ### Build contracts with cdt if available ###
 include(ExternalProject)
 
